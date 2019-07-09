@@ -131,4 +131,21 @@ class SingletonDemo private constructor() {
 }
 ```
 
+##### 在Kotlin版的Double Check，给单例添加一个属性，这里提供了一个实现的方式
+```
+class SingletonDemo private constructor(private val property: Int) {//这里可以根据实际需求发生改变
+  
+    companion object {
+        @Volatile private var instance: SingletonDemo? = null
+        fun getInstance(property: Int) =
+                instance ?: synchronized(this) {
+                    instance ?: SingletonDemo(property).also { instance = it }
+                }
+    }
+}
+```
+
+
+
+
 
